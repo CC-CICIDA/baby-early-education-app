@@ -775,6 +775,34 @@ body::after {
     transition: all 0.3s;
 }
 
+.source-note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.68);
+    color: #5a7282;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    border: 1px solid rgba(255,255,255,0.74);
+}
+
+.source-note span {
+    flex: 1;
+}
+
+.copy-source-btn {
+    flex-shrink: 0;
+    border: none;
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: rgba(255, 143, 152, 0.14);
+    color: #e45679;
+    font-weight: 800;
+    cursor: pointer;
+}
+
 .xiaohongshu-link {
     background: linear-gradient(135deg, #ff8f98 0%, #ff6aa9 100%);
     color: white;
@@ -784,6 +812,17 @@ body::after {
 .xiaohongshu-link:hover {
     transform: translateY(-2px);
     box-shadow: 0 18px 34px rgba(255, 106, 169, 0.32);
+}
+
+.xiaohongshu-backup-link {
+    background: linear-gradient(135deg, #ffb5bf 0%, #ff8f98 100%);
+    color: white;
+    box-shadow: 0 14px 28px rgba(255, 143, 152, 0.22);
+}
+
+.xiaohongshu-backup-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(255, 143, 152, 0.3);
 }
 
 .video-search-link {

@@ -205,7 +205,15 @@ function openModal(item, type) {
         aiReview.style.display = 'none';
     }
     
-    let sourceHTML = `<a href="${buildXiaohongshuSearchUrl(item, type)}" target="_blank" class="source-link xiaohongshu-link">📕 搜索小红书相关高赞内容</a>`;
+    const xiaohongshuKeyword = buildXiaohongshuKeyword(item, type);
+    let sourceHTML = `
+        <div class="source-note">
+            <span>小红书搜索词：${escapeHTML(xiaohongshuKeyword)}</span>
+            <button type="button" class="copy-source-btn" data-keyword="${escapeHTML(xiaohongshuKeyword)}">复制</button>
+        </div>
+        <a href="${buildXiaohongshuSearchUrl(item, type)}" target="_blank" class="source-link xiaohongshu-link">📕 小红书内搜索（可能需登录）</a>
+        <a href="${buildBaiduXiaohongshuSearchUrl(xiaohongshuKeyword)}" target="_blank" class="source-link xiaohongshu-backup-link">🔎 百度站内搜小红书</a>
+    `;
     if (item.videoUrl) {
         sourceHTML += `<a href="${item.videoUrl}" target="_blank" class="source-link video-search-link">🎬 打开视频/搜索结果</a>`;
     }
@@ -222,6 +230,7 @@ function openModal(item, type) {
     if (sourceHTML) {
         sourceLinks.innerHTML = sourceHTML;
         sourceLinks.style.display = 'block';
+        bindCopyKeyword(sourceLinks);
     } else {
         sourceLinks.style.display = 'none';
     }
@@ -230,6 +239,12 @@ function openModal(item, type) {
 }
 
 function buildXiaohongshuSearchUrl(item, type) {
+    const keyword = buildXiaohongshuKeyword(item, type);
+
+    return `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(keyword)}`;
+}
+
+function buildXiaohongshuKeyword(item, type) {
     const typeKeywordMap = {
         recipes: '宝宝辅食',
         games: '蒙台梭利早教游戏',
@@ -241,9 +256,40 @@ function buildXiaohongshuSearchUrl(item, type) {
     const title = item.name || item.day || '';
     const desc = item.desc || item.meals || '';
     const tags = item.tags ? item.tags.join(' ') : '';
-    const keyword = [title, tags, typeKeywordMap[type], desc].filter(Boolean).join(' ').slice(0, 80);
 
-    return `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(keyword)}`;
+    return [title, tags, typeKeywordMap[type], desc].filter(Boolean).join(' ').slice(0, 80);
+}
+
+function buildBaiduXiaohongshuSearchUrl(keyword) {
+    return `https://www.baidu.com/s?wd=${encodeURIComponent(`site:xiaohongshu.com ${keyword}`)}`;
+}
+
+function bindCopyKeyword(container) {
+    const copyButton = container.querySelector('.copy-source-btn');
+    if (!copyButton) return;
+
+    copyButton.addEventListener('click', async () => {
+        const keyword = copyButton.dataset.keyword || '';
+        try {
+            await navigator.clipboard.writeText(keyword);
+            copyButton.textContent = '已复制';
+            setTimeout(() => {
+                copyButton.textContent = '复制';
+            }, 1200);
+        } catch (error) {
+            window.prompt('复制搜索词后，可到小红书 App 内搜索：', keyword);
+        }
+    });
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[char]));
 }
 
 function isEmbeddableVideo(videoUrl) {
