@@ -150,7 +150,10 @@ function openModal(item, type) {
         videoContainer.style.display = 'none';
     }
     
-    if (item.tips) {
+    if (type === 'stories' && item.content) {
+        tips.innerHTML = `<div class="tips-header">📖 内容摘录</div><p>${item.content}</p>`;
+        tips.style.display = 'block';
+    } else if (item.tips) {
         tips.innerHTML = `<div class="tips-header">💡 小贴士</div><p>${item.tips}</p>`;
         tips.style.display = 'block';
     } else {
@@ -203,6 +206,15 @@ function openModal(item, type) {
     }
     
     let sourceHTML = `<a href="${buildXiaohongshuSearchUrl(item, type)}" target="_blank" class="source-link xiaohongshu-link">📕 搜索小红书相关高赞内容</a>`;
+    if (item.videoUrl) {
+        sourceHTML += `<a href="${item.videoUrl}" target="_blank" class="source-link video-search-link">🎬 打开视频/搜索结果</a>`;
+    }
+    if (item.audioUrl) {
+        sourceHTML += `<a href="${item.audioUrl}" target="_blank" class="source-link audio-link">🎧 打开音频/搜索结果</a>`;
+    }
+    if (item.storyUrl) {
+        sourceHTML += `<a href="${item.storyUrl}" target="_blank" class="source-link story-link">📖 查看故事来源</a>`;
+    }
     if ((type === 'books' || type === 'games') && !isEmbeddableVideo(item.video)) {
         sourceHTML += `<a href="${buildVideoSearchUrl(item, type)}" target="_blank" class="source-link video-search-link">🎬 搜索真实${type === 'books' ? '绘本讲读' : '早教示范'}视频</a>`;
     }
@@ -223,7 +235,8 @@ function buildXiaohongshuSearchUrl(item, type) {
         games: '蒙台梭利早教游戏',
         toys: '宝宝玩具推荐',
         books: '绘本共读',
-        products: '宝宝用品测评'
+        products: '宝宝用品测评',
+        stories: '儿童故事儿歌'
     };
     const title = item.name || item.day || '';
     const desc = item.desc || item.meals || '';
@@ -247,6 +260,117 @@ function buildVideoSearchUrl(item, type) {
         : `${title} 早教游戏 示范 视频`;
 
     return `https://www.bilibili.com/search?keyword=${encodeURIComponent(keyword)}`;
+}
+
+function buildSearchUrl(platform, keyword) {
+    const encodedKeyword = encodeURIComponent(keyword);
+    const searchMap = {
+        youtube: `https://www.youtube.com/results?search_query=${encodedKeyword}`,
+        bilibili: `https://www.bilibili.com/search?keyword=${encodedKeyword}`,
+        ximalaya: `https://www.ximalaya.com/search/${encodedKeyword}`,
+        baidu: `https://www.baidu.com/s?wd=${encodedKeyword}`
+    };
+
+    return searchMap[platform];
+}
+
+function getStorySongContent(ageGroup) {
+    const contentMap = {
+        '0-1': {
+            english: ['Twinkle Twinkle Little Star', '节奏稳定、旋律轻柔，适合作为安抚和睡前背景音乐', 'Twinkle, twinkle, little star, how I wonder what you are.'],
+            chinese: ['《摇篮曲》', '轻声哼唱，配合抱睡或睡前安抚，帮助建立昼夜节律', '睡吧，睡吧，我亲爱的宝贝。'],
+            story: ['黑白小星星', '小星星一闪一闪，宝宝看见亮亮的光。妈妈轻轻说：晚安，小星星也要睡觉啦。']
+        },
+        '1-3': {
+            english: ['Hush Little Baby', '适合低月龄安抚，重复句式利于宝宝熟悉声音节奏', 'Hush little baby, don’t say a word, mama’s gonna buy you a mockingbird.'],
+            chinese: ['《小星星》', '旋律简单，可边唱边做轻柔拍抚，促进亲子联结', '一闪一闪亮晶晶，满天都是小星星。'],
+            story: ['小手醒来了', '早上，小手醒来了。它摸摸软软的小毯子，又握住妈妈的手。妈妈说：你好呀，小手。']
+        },
+        '3-6': {
+            english: ['If You’re Happy and You Know It', '适合配合拍手动作，促进听觉-动作联结', 'If you’re happy and you know it, clap your hands.'],
+            chinese: ['《两只老虎》', '节奏清楚，适合用表情和手势吸引宝宝模仿', '两只老虎，两只老虎，跑得快，跑得快。'],
+            story: ['小球滚呀滚', '红色小球滚到宝宝脚边，宝宝伸手碰碰它。小球又滚回妈妈那里，像在说：再来一次。']
+        },
+        '6-9': {
+            english: ['Pat-a-Cake', '适合拍手、拍腿和轮流互动，训练模仿能力', 'Pat-a-cake, pat-a-cake, baker’s man.'],
+            chinese: ['《找朋友》', '可配合看脸、挥手、拥抱动作，增强社交互动', '找呀找呀找朋友，找到一个好朋友。'],
+            story: ['藏起来的小熊', '小熊躲在布后面。宝宝拉开布，小熊出来啦！妈妈笑着说：你找到小熊了。']
+        },
+        '9-12': {
+            english: ['The Wheels on the Bus', '重复结构明显，适合做转轮、开关门等动作', 'The wheels on the bus go round and round.'],
+            chinese: ['《小手拍拍》', '适合认识眼睛、鼻子、嘴巴，配合指认身体部位', '小手拍拍，小手拍拍，手指伸出来。'],
+            story: ['杯子里的声音', '宝宝敲敲小杯子，咚咚咚。再敲敲小勺子，叮叮叮。原来每样东西都有自己的声音。']
+        },
+        '12-18': {
+            english: ['Head, Shoulders, Knees and Toes', '适合身体部位认知和大动作模仿', 'Head, shoulders, knees and toes, knees and toes.'],
+            chinese: ['《拔萝卜》', '适合多人轮流参与，理解合作和等待', '拔萝卜，拔萝卜，嘿哟嘿哟拔萝卜。'],
+            story: ['小兔自己穿鞋', '小兔要出门，它把鞋子拿来。左脚试一试，右脚试一试，终于穿好啦。小兔说：我自己会试。']
+        },
+        '18-24': {
+            english: ['Old MacDonald Had a Farm', '适合动物声音模仿和词汇扩展', 'Old MacDonald had a farm, E-I-E-I-O.'],
+            chinese: ['《数鸭子》', '适合数数启蒙和节奏感练习', '门前大桥下，游过一群鸭。'],
+            story: ['小火车排队', '小火车有红车厢、黄车厢和蓝车厢。它们一个跟着一个，排好队去山坡看风景。']
+        },
+        '3-4': {
+            english: ['Five Little Ducks', '适合倒数、动物和亲子分离-重聚主题', 'Five little ducks went out one day, over the hill and far away.'],
+            chinese: ['《春天在哪里》', '适合自然观察后唱，连接季节、颜色和户外经验', '春天在哪里呀，春天在哪里。'],
+            story: ['会道歉的小恐龙', '小恐龙跑得太快，撞倒了朋友的积木。它停下来，说：对不起，我帮你一起搭回来。朋友笑了。']
+        },
+        '4-5': {
+            english: ['Do-Re-Mi Song', '适合音阶启蒙、记忆和节奏表达', 'Do, a deer, a female deer. Re, a drop of golden sun.'],
+            chinese: ['《虫儿飞》', '旋律舒缓，适合情绪安抚和夜晚主题讨论', '黑黑的天空低垂，亮亮的繁星相随。'],
+            story: ['爱提问的小河马', '小河马看到影子跟着自己走，就问：你为什么一直跟着我？太阳公公告诉它：有光的时候，影子就会来做朋友。']
+        }
+    };
+
+    const fallback = contentMap[ageGroup] || contentMap['4-5'];
+    const ageLabel = getAgeLabel(ageGroup);
+
+    return [
+        {
+            name: fallback.english[0],
+            desc: fallback.english[1],
+            tags: ['英文儿歌', ageLabel],
+            image: `https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=${encodeURIComponent(`cute children singing english nursery rhyme ${ageLabel}`)}&image_size=portrait_4_3`,
+            content: fallback.english[2],
+            audioUrl: buildSearchUrl('youtube', `${fallback.english[0]} official nursery rhyme`),
+            videoUrl: buildSearchUrl('bilibili', `${fallback.english[0]} 英文儿歌`)
+        },
+        {
+            name: fallback.chinese[0],
+            desc: fallback.chinese[1],
+            tags: ['中文儿歌', ageLabel],
+            image: `https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=${encodeURIComponent(`cute Chinese nursery rhyme children singing ${ageLabel}`)}&image_size=portrait_4_3`,
+            content: fallback.chinese[2],
+            audioUrl: buildSearchUrl('ximalaya', `${fallback.chinese[0]} 儿歌`),
+            videoUrl: buildSearchUrl('bilibili', `${fallback.chinese[0]} 儿歌`)
+        },
+        {
+            name: fallback.story[0],
+            desc: '匹配当前年龄段的亲子共读短故事，可直接读给孩子听，也可搜索同主题优质故事。',
+            tags: ['故事', ageLabel],
+            image: `https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=${encodeURIComponent(`warm cartoon bedtime story for ${ageLabel} child`)}&image_size=portrait_4_3`,
+            content: fallback.story[1],
+            storyUrl: buildSearchUrl('baidu', `${fallback.story[0]} 儿童故事`),
+            videoUrl: buildSearchUrl('bilibili', `${fallback.story[0]} 儿童故事`)
+        }
+    ];
+}
+
+function getAgeLabel(ageGroup) {
+    const labels = {
+        '0-1': '0-1个月',
+        '1-3': '1-3个月',
+        '3-6': '3-6个月',
+        '6-9': '6-9个月',
+        '9-12': '9-12个月',
+        '12-18': '12-18个月',
+        '18-24': '18-24个月',
+        '3-4': '3-4岁',
+        '4-5': '4-5岁'
+    };
+
+    return labels[ageGroup] || ageGroup;
 }
 
 function buildProductGuidance(item) {
@@ -324,6 +448,7 @@ function generateContent() {
     generateToys(data.toys);
     generateBooks(data.books);
     generateProducts(data.products);
+    generateStories(data.stories || getStorySongContent(currentAgeGroup));
 }
 
 function generateRecipes(recipes) {
@@ -403,5 +528,22 @@ function generateProducts(products) {
     
     container.querySelectorAll('.clickable').forEach((card, index) => {
         card.addEventListener('click', () => openModal(products[index], 'products'));
+    });
+}
+
+function generateStories(stories) {
+    const container = document.getElementById('stories-content');
+    container.innerHTML = stories.map((story, index) => `
+        <div class="item-card clickable" data-index="${index}" data-type="stories">
+            <h3>${story.name}</h3>
+            <p>${story.desc}</p>
+            ${story.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            ${story.image ? '<div class="card-image-wrapper"><img src="' + story.image + '" class="card-image"></div>' : ''}
+            <div class="video-badge">▶ 有音频/视频/故事链接</div>
+        </div>
+    `).join('');
+
+    container.querySelectorAll('.clickable').forEach((card, index) => {
+        card.addEventListener('click', () => openModal(stories[index], 'stories'));
     });
 }
