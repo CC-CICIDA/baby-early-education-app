@@ -786,6 +786,17 @@ body::after {
     box-shadow: 0 18px 34px rgba(255, 106, 169, 0.32);
 }
 
+.video-search-link {
+    background: linear-gradient(135deg, #7cd8ff 0%, #61d6ef 100%);
+    color: white;
+    box-shadow: 0 14px 28px rgba(97, 214, 239, 0.24);
+}
+
+.video-search-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(97, 214, 239, 0.32);
+}
+
 @media (max-width: 480px) {
     #app {
         box-shadow: none;

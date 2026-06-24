@@ -229,5 +229,71 @@ const educationData = {
             { name: "防晒霜", desc: "户外活动必备，保护娇嫩肌肤", tags: ["护理", "防晒"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=baby%20sunscreen%20cream%20safe%20natural&image_size=portrait_4_3", brand: "Thinkbaby", SPF: "50+" },
             { name: "防蚊产品", desc: "夏季必备，保护宝宝免受蚊虫叮咬", tags: ["护理", "防护"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=baby%20mosquito%20repellent%20safe%20natural&image_size=portrait_4_3", brand: "润本", type: "喷雾" }
         ]
+    },
+    "3-4": {
+        recipes: [
+            { day: "周一", meals: "早餐：牛奶+全麦吐司+鸡蛋；午餐：米饭+番茄牛肉+西兰花；晚餐：南瓜小米粥+蒸鱼", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20healthy%20meal%20rice%20beef%20broccoli&image_size=portrait_4_3", tips: "控制盐糖，保证优质蛋白和蔬菜" },
+            { day: "周二", meals: "早餐：燕麦粥+香蕉；午餐：鸡肉蔬菜意面；晚餐：软米饭+豆腐虾仁+青菜", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20oatmeal%20banana%20pasta%20healthy&image_size=portrait_4_3", tips: "虾仁切小块，确认无过敏" },
+            { day: "周三", meals: "早餐：酸奶+水果+小馒头；午餐：牛肉胡萝卜饭；晚餐：蔬菜鸡蛋面", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20yogurt%20fruit%20vegetable%20noodles&image_size=portrait_4_3", tips: "酸奶选择无添加糖或低糖" },
+            { day: "周四", meals: "早餐：玉米粥+鸡蛋羹；午餐：清蒸鱼+米饭+菠菜；晚餐：番茄土豆炖牛腩", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20steamed%20fish%20spinach%20rice&image_size=portrait_4_3", tips: "鱼肉仔细去刺" },
+            { day: "周五", meals: "早餐：蔬菜鸡蛋饼+牛奶；午餐：小水饺+紫菜汤；晚餐：米饭+鸡翅根+彩椒", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20egg%20pancake%20dumplings%20healthy&image_size=portrait_4_3", tips: "彩椒切小丁，增加颜色兴趣" },
+            { day: "周六", meals: "早餐：红薯粥+奶酪；午餐：三文鱼饭团+蔬菜；晚餐：肉末豆腐+软米饭", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20salmon%20rice%20balls%20vegetables&image_size=portrait_4_3", tips: "饭团做成小尺寸方便抓握" },
+            { day: "周日", meals: "早餐：小馄饨；午餐：鸡蛋炒饭+青菜汤；晚餐：山药排骨汤+米饭", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20wonton%20fried%20rice%20soup&image_size=portrait_4_3", tips: "汤类少盐，肉类炖软" }
+        ],
+        games: [
+            { name: "颜色形状分类", desc: "按颜色、形状、大小整理积木，训练分类和逻辑表达", tags: ["认知", "逻辑", "语言"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20sorting%20color%20shape%20blocks&image_size=portrait_4_3", steps: ["准备不同颜色形状的积木", "先示范按一种规则分类", "请孩子说出分类理由", "再尝试按两种规则分类"] },
+            { name: "生活序列卡", desc: "用起床、刷牙、吃饭等图片排序，理解先后顺序", tags: ["时间概念", "生活自理"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20daily%20routine%20sequence%20cards&image_size=portrait_4_3", steps: ["准备3-5张生活图片", "请孩子按发生顺序排列", "让孩子复述完整过程", "逐步增加图片数量"] },
+            { name: "蒙氏倒水练习", desc: "用小壶倒水到杯中，培养专注力、手眼协调和生活能力", tags: ["蒙台梭利", "生活技能"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20montessori%20pouring%20water%20practice&image_size=portrait_4_3", steps: ["准备小水壶和两个杯子", "托盘内少量水练习", "慢慢倒入目标杯", "用小布擦拭溢出的水"] },
+            { name: "故事接龙", desc: "家长开头，孩子补充角色和情节，提升想象力与表达", tags: ["语言", "想象力"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=parent%20child%20storytelling%20preschooler&image_size=portrait_4_3", steps: ["给出一个简单开头", "请孩子补充一个角色", "轮流说下一句", "最后一起回顾故事"] }
+        ],
+        toys: [
+            { name: "磁力片/大颗粒建构", desc: "搭建房子、桥梁和动物，培养空间想象力", tags: ["建构", "空间"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20magnetic%20tiles%20building%20toy&image_size=portrait_4_3", brand: "Magformers", ageRange: "3岁+" },
+            { name: "儿童安全剪刀和手工纸", desc: "剪直线、撕贴、拼贴，训练手部力量", tags: ["精细动作", "艺术"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20safety%20scissors%20paper%20craft&image_size=portrait_4_3", brand: "得力", ageRange: "3岁+" },
+            { name: "角色扮演医生套装", desc: "模拟看诊，帮助孩子理解身体和照护", tags: ["角色扮演", "社交"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20doctor%20pretend%20play%20kit&image_size=portrait_4_3", brand: "Hape", ageRange: "3-6岁" },
+            { name: "进阶拼图（12-24片）", desc: "训练观察力、耐心和问题解决能力", tags: ["专注力", "问题解决"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20jigsaw%20puzzle%2024%20pieces&image_size=portrait_4_3", brand: "Ravensburger", ageRange: "3-5岁" }
+        ],
+        books: [
+            { name: "《不一样的卡梅拉》系列", desc: "情节幽默、语言丰富，适合亲子共读和复述", tags: ["想象", "语言"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=cartoon%20chicken%20picture%20book%20series%20preschool&image_size=portrait_4_3", author: "克利斯提昂·约里波瓦", publisher: "二十一世纪出版社", pages: "约48页", ai_review: "已审核-符合3-4岁叙事理解与语言表达发展特点" },
+            { name: "《第一次上街买东西》", desc: "贴近日常生活，帮助孩子理解独立尝试和安全边界", tags: ["生活", "勇气"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschool%20girl%20shopping%20picture%20book%20soft&image_size=portrait_4_3", author: "筒井赖子", publisher: "新星出版社", pages: "32页", ai_review: "已审核-符合生活经验扩展和社会性发展目标" }
+        ],
+        products: [
+            { name: "儿童学习筷", desc: "辅助练习夹取动作，逐步过渡到普通筷", tags: ["进餐", "精细动作"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20training%20chopsticks%20cute&image_size=portrait_4_3", brand: "EDISON", material: "PP+硅胶" },
+            { name: "防滑儿童凳", desc: "洗手、刷牙和取物时辅助站立", tags: ["自理", "安全"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20non%20slip%20step%20stool%20bathroom&image_size=portrait_4_3", brand: "IKEA", features: ["防滑脚垫"] },
+            { name: "儿童围裙和袖套", desc: "画画、做手工、厨房体验时保护衣物", tags: ["手工", "生活技能"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20apron%20art%20craft%20cute&image_size=portrait_4_3", brand: "Babycare", material: "防水布" },
+            { name: "儿童水杯", desc: "外出和幼儿园过渡使用，培养自主饮水", tags: ["外出", "自理"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=preschooler%20water%20bottle%20cute%20safe&image_size=portrait_4_3", brand: "Contigo", material: "Tritan" }
+        ]
+    },
+    "4-5": {
+        recipes: [
+            { day: "周一", meals: "早餐：牛奶+鸡蛋三明治；午餐：米饭+土豆炖牛肉+青菜；晚餐：番茄鱼片面", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20healthy%20sandwich%20beef%20rice&image_size=portrait_4_3", tips: "保证早餐蛋白质，晚餐不过量" },
+            { day: "周二", meals: "早餐：燕麦酸奶碗；午餐：鸡肉咖喱饭；晚餐：虾仁豆腐汤+米饭", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20oatmeal%20yogurt%20chicken%20rice&image_size=portrait_4_3", tips: "咖喱选择儿童低刺激口味" },
+            { day: "周三", meals: "早餐：玉米饼+牛奶；午餐：肉末茄子+米饭；晚餐：蔬菜鸡蛋疙瘩汤", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20corn%20pancake%20vegetable%20soup&image_size=portrait_4_3", tips: "茄子少油烹调" },
+            { day: "周四", meals: "早餐：小馄饨；午餐：三色炒饭+紫菜蛋花汤；晚餐：清蒸鲈鱼+南瓜", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20fried%20rice%20steamed%20fish%20pumpkin&image_size=portrait_4_3", tips: "增加不同颜色蔬菜" },
+            { day: "周五", meals: "早餐：全麦面包+奶酪+水果；午餐：番茄牛腩饭；晚餐：鸡蛋蔬菜卷", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20whole%20wheat%20bread%20fruit%20tomato%20beef&image_size=portrait_4_3", tips: "水果切块，避免边跑边吃" },
+            { day: "周六", meals: "早餐：红豆粥+鸡蛋；午餐：自制小披萨+蔬菜；晚餐：山药鸡汤+米饭", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20homemade%20pizza%20vegetables%20healthy&image_size=portrait_4_3", tips: "自制披萨少芝士少盐" },
+            { day: "周日", meals: "早餐：南瓜发糕+豆浆；午餐：牛肉丸汤面；晚餐：米饭+西兰花炒蛋", image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20pumpkin%20cake%20beef%20noodle%20soup&image_size=portrait_4_3", tips: "牛肉丸切小块，避免噎呛" }
+        ],
+        games: [
+            { name: "数感厨房", desc: "用水果块、饼干或积木做加减和一一对应", tags: ["数学", "生活"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20counting%20fruit%20math%20game&image_size=portrait_4_3", steps: ["准备10个可数物品", "先做一一对应点数", "尝试拿走或增加1-3个", "让孩子说出变化"] },
+            { name: "地图寻宝", desc: "画简单房间地图，按线索找物品，训练空间和执行功能", tags: ["空间", "执行功能"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20treasure%20map%20indoor%20game&image_size=portrait_4_3", steps: ["画客厅或房间简图", "标记一个藏宝点", "孩子根据地图寻找", "换孩子来画地图"] },
+            { name: "情绪小剧场", desc: "用玩偶演出开心、生气、害怕等情绪，学习表达和共情", tags: ["情绪", "社交"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20emotion%20puppet%20play&image_size=portrait_4_3", steps: ["准备玩偶或手偶", "抽取一个情绪词", "演出一个小场景", "讨论可以怎么表达需求"] },
+            { name: "自然观察记录", desc: "观察叶子、石头、昆虫，用画画记录差异", tags: ["科学", "观察"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20nature%20observation%20drawing%20journal&image_size=portrait_4_3", steps: ["选择安全的户外区域", "找3种自然物", "比较颜色形状大小", "画下来并讲给家长听"] }
+        ],
+        toys: [
+            { name: "儿童显微观察盒", desc: "观察叶片、石头纹理等，激发科学探索", tags: ["科学", "观察"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20science%20observation%20kit%20safe&image_size=portrait_4_3", brand: "Learning Resources", ageRange: "4岁+" },
+            { name: "桌游：记忆配对", desc: "训练工作记忆、轮流等待和规则意识", tags: ["记忆", "规则"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20memory%20matching%20board%20game&image_size=portrait_4_3", brand: "HABA", ageRange: "4岁+" },
+            { name: "可水洗水彩和画架", desc: "支持大幅创作，发展审美和表达", tags: ["艺术", "表达"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20washable%20paint%20easel%20art&image_size=portrait_4_3", brand: "Crayola", ageRange: "4-6岁" },
+            { name: "平衡车/滑板车护具套装", desc: "户外运动时保护膝肘和头部", tags: ["运动", "防护"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20helmet%20knee%20pads%20scooter&image_size=portrait_4_3", brand: "Micro", ageRange: "4岁+" }
+        ],
+        books: [
+            { name: "《神奇校车》图画书版", desc: "用故事方式理解身体、自然和科学现象", tags: ["科学", "探索"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=magic%20school%20bus%20style%20science%20picture%20book&image_size=portrait_4_3", author: "乔安娜·柯尔", publisher: "贵州人民出版社", pages: "约40页", ai_review: "已审核-适合4-5岁科学启蒙和提问能力发展" },
+            { name: "《爷爷一定有办法》", desc: "经典亲情绘本，适合讨论变化、珍惜和创造", tags: ["亲情", "创造"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=grandfather%20picture%20book%20warm%20family%20story&image_size=portrait_4_3", author: "菲比·吉尔曼", publisher: "明天出版社", pages: "32页", ai_review: "已审核-符合叙事理解、情感表达和亲子共读目标" }
+        ],
+        products: [
+            { name: "儿童书桌椅", desc: "画画、拼图和阅读使用，帮助形成稳定专注区", tags: ["学习", "姿势"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=kindergarten%20child%20desk%20chair%20reading%20corner&image_size=portrait_4_3", brand: "IKEA", features: ["高度适配"] },
+            { name: "儿童护眼台灯", desc: "阅读和手工时提供稳定照明", tags: ["阅读", "护眼"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=child%20eye%20care%20desk%20lamp%20soft%20light&image_size=portrait_4_3", brand: "明基", features: ["无频闪"] },
+            { name: "运动护具", desc: "滑板车、平衡车、轮滑时基础防护", tags: ["运动", "防护"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=child%20sports%20protective%20gear%20helmet%20pads&image_size=portrait_4_3", brand: "Decathlon", features: ["头盔+护膝+护肘"] },
+            { name: "标签收纳盒", desc: "玩具和材料分类收纳，培养秩序感", tags: ["收纳", "蒙台梭利"], image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=child%20toy%20storage%20boxes%20labels%20montessori&image_size=portrait_4_3", brand: "无印良品", material: "PP" }
+        ]
     }
 };
