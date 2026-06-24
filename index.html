@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>宝宝早教助手</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3.0">
 </head>
 <body>
     <div id="app">
         <header class="app-header">
-            <h1>🌟 宝宝早教助手</h1>
+            <div class="hero-mascot" aria-hidden="true">
+                <span class="mascot-face"></span>
+            </div>
+            <p class="eyebrow">Montessori Baby Guide</p>
+            <h1>宝宝早教助手</h1>
+            <p class="hero-subtitle">按月龄生成食谱、游戏、绘本和用品建议</p>
         </header>
 
         <main class="app-main">
             <section id="input-section" class="section">
                 <div class="card">
+                    <div class="card-cloud" aria-hidden="true"></div>
                     <h2>请输入宝宝信息</h2>
+                    <p class="card-intro">选一个阶段，获取一份轻松可执行的家庭早教清单。</p>
                     <div class="input-group">
                         <label for="baby-age">宝宝月龄 / 年龄</label>
                         <select id="baby-age">
