@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>宝宝早教助手</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <h1>🌟 宝宝早教助手</h1>
+        </header>
+
+        <main class="app-main">
+            <section id="input-section" class="section">
+                <div class="card">
+                    <h2>请输入宝宝信息</h2>
+                    <div class="input-group">
+                        <label for="baby-age">宝宝月龄 / 年龄</label>
+                        <select id="baby-age">
+                            <option value="" disabled selected>请选择</option>
+                            <option value="0-1">0-1个月</option>
+                            <option value="1-3">1-3个月</option>
+                            <option value="3-6">3-6个月</option>
+                            <option value="6-9">6-9个月</option>
+                            <option value="9-12">9-12个月</option>
+                            <option value="12-18">12-18个月</option>
+                            <option value="18-24">18-24个月</option>
+                            <option value="2-3">2-3岁</option>
+                            <option value="3-4">3-4岁</option>
+                            <option value="4-5">4-5岁</option>
+                            <option value="5-6">5-6岁</option>
+                        </select>
+                    </div>
+                    <button id="generate-btn" class="btn btn-primary">生成早教方案</button>
+                </div>
+            </section>
+
+            <section id="results-section" class="section hidden">
+                <div class="tabs">
+                    <button class="tab active" data-tab="recipes">🍽️ 每周食谱</button>
+                    <button class="tab" data-tab="games">🎮 早教游戏</button>
+                    <button class="tab" data-tab="toys">🧸 推荐玩具</button>
+                    <button class="tab" data-tab="books">📚 绘本推荐</button>
+                    <button class="tab" data-tab="products">🛍️ 生活用品</button>
+                </div>
+
+                <div id="recipes-content" class="tab-content active"></div>
+                <div id="games-content" class="tab-content"></div>
+                <div id="toys-content" class="tab-content"></div>
+                <div id="books-content" class="tab-content"></div>
+                <div id="products-content" class="tab-content"></div>
+
+                <button id="back-btn" class="btn btn-secondary">返回重新选择</button>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>基于蒙台梭利教育理念 & 小红书热门推荐</p>
+        </footer>
+    </div>
+
+    <div id="detail-modal" class="modal hidden">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close-btn">×</button>
+            <div id="modal-image-container" class="modal-image-container"></div>
+            <div id="modal-video-container" class="modal-video-container"></div>
+            <h3 id="modal-title"></h3>
+            <div id="modal-tags" class="modal-tags"></div>
+            <p id="modal-desc"></p>
+            <div id="modal-tips" class="modal-tips"></div>
+            <div id="modal-steps" class="modal-steps"></div>
+            <div id="modal-meta" class="modal-meta"></div>
+            <div id="modal-ai-review" class="modal-ai-review"></div>
+            <div id="modal-source-links" class="modal-source-links"></div>
+        </div>
+    </div>
+
+    <script src="data.js?v=2.0"></script>
+    <script src="app.js?v=2.0"></script>
+</body>
+</html>
