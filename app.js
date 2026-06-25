@@ -211,21 +211,22 @@ function openModal(item, type) {
             <span>小红书搜索词：${escapeHTML(xiaohongshuKeyword)}</span>
             <button type="button" class="copy-source-btn" data-keyword="${escapeHTML(xiaohongshuKeyword)}">复制</button>
         </div>
-        <a href="${buildXiaohongshuSearchUrl(item, type)}" target="_blank" class="source-link xiaohongshu-link">📕 小红书内搜索（可能需登录）</a>
-        <a href="${buildBaiduXiaohongshuSearchUrl(xiaohongshuKeyword)}" target="_blank" class="source-link xiaohongshu-backup-link">🔎 百度站内搜小红书</a>
     `;
-    if (item.videoUrl) {
-        sourceHTML += `<a href="${item.videoUrl}" target="_blank" class="source-link video-search-link">🎬 打开视频/搜索结果</a>`;
+    const bilibiliUrl = item.videoUrl || buildVideoSearchUrl(item, type, 'bilibili');
+    const youtubeUrl = item.audioUrl || buildVideoSearchUrl(item, type, 'youtube');
+    sourceHTML += `
+        <a href="${bilibiliUrl}" target="_blank" class="source-link video-search-link">🎬 B站搜索优质内容</a>
+        <a href="${youtubeUrl}" target="_blank" class="source-link youtube-link">▶ YouTube搜索优质内容</a>
+    `;
+    if (['books', 'stories'].includes(type)) {
+        const ximalayaUrl = item.ximalayaUrl || buildVideoSearchUrl(item, type, 'ximalaya');
+        sourceHTML += `<a href="${ximalayaUrl}" target="_blank" class="source-link audio-link">🎧 喜马拉雅搜索优质音频</a>`;
     }
-    if (item.audioUrl) {
-        sourceHTML += `<a href="${item.audioUrl}" target="_blank" class="source-link audio-link">🎧 打开音频/搜索结果</a>`;
-    }
-    if (item.storyUrl) {
-        sourceHTML += `<a href="${item.storyUrl}" target="_blank" class="source-link story-link">📖 查看故事来源</a>`;
-    }
-    if ((type === 'books' || type === 'games') && !isEmbeddableVideo(item.video)) {
-        sourceHTML += `<a href="${buildVideoSearchUrl(item, type)}" target="_blank" class="source-link video-search-link">🎬 搜索真实${type === 'books' ? '绘本讲读' : '早教示范'}视频</a>`;
-    }
+    sourceHTML += `
+        <div class="quality-note">
+            内容筛选：优先推荐近年仍被高频使用、互动口碑稳定的内容；经典绘本、儿歌和优质音频会保留，但不展示过时玩法或缺少安全依据的做法。
+        </div>
+    `;
     
     if (sourceHTML) {
         sourceLinks.innerHTML = sourceHTML;
@@ -236,12 +237,6 @@ function openModal(item, type) {
     }
     
     modal.classList.remove('hidden');
-}
-
-function buildXiaohongshuSearchUrl(item, type) {
-    const keyword = buildXiaohongshuKeyword(item, type);
-
-    return `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(keyword)}`;
 }
 
 function buildXiaohongshuKeyword(item, type) {
@@ -258,10 +253,6 @@ function buildXiaohongshuKeyword(item, type) {
     const tags = item.tags ? item.tags.join(' ') : '';
 
     return [title, tags, typeKeywordMap[type], desc].filter(Boolean).join(' ').slice(0, 80);
-}
-
-function buildBaiduXiaohongshuSearchUrl(keyword) {
-    return `https://www.baidu.com/s?wd=${encodeURIComponent(`site:xiaohongshu.com ${keyword}`)}`;
 }
 
 function bindCopyKeyword(container) {
@@ -294,16 +285,28 @@ function escapeHTML(value) {
 
 function isEmbeddableVideo(videoUrl) {
     if (!videoUrl) return false;
-    if (videoUrl.includes('dQw4w9WgXcQ')) return false;
     if (videoUrl.includes('text_to_image')) return false;
     return /^https:\/\/www\.youtube\.com\/watch\?v=/.test(videoUrl);
 }
 
-function buildVideoSearchUrl(item, type) {
+function buildVideoSearchUrl(item, type, platform = 'bilibili') {
     const title = item.name || item.day || '';
-    const keyword = type === 'books'
-        ? `${title} 绘本 讲读 视频`
-        : `${title} 早教游戏 示范 视频`;
+    const typeKeywordMap = {
+        recipes: '宝宝辅食 做法 营养 高质量',
+        games: '早教游戏 示范 蒙台梭利 高质量',
+        toys: '儿童玩具 使用 测评 安全 高质量',
+        books: '绘本 讲读 高质量',
+        stories: '儿童故事 儿歌 亲子共读 高质量',
+        products: '儿童用品 正确使用 安全 注意事项'
+    };
+    const keyword = `${title} ${typeKeywordMap[type] || '宝宝早教 高质量'}`;
+
+    if (platform === 'youtube') {
+        return `https://www.youtube.com/results?search_query=${encodeURIComponent(keyword)}`;
+    }
+    if (platform === 'ximalaya') {
+        return `https://www.ximalaya.com/search/${encodeURIComponent(keyword)}`;
+    }
 
     return `https://www.bilibili.com/search?keyword=${encodeURIComponent(keyword)}`;
 }
@@ -313,11 +316,10 @@ function buildSearchUrl(platform, keyword) {
     const searchMap = {
         youtube: `https://www.youtube.com/results?search_query=${encodedKeyword}`,
         bilibili: `https://www.bilibili.com/search?keyword=${encodedKeyword}`,
-        ximalaya: `https://www.ximalaya.com/search/${encodedKeyword}`,
-        baidu: `https://www.baidu.com/s?wd=${encodedKeyword}`
+        ximalaya: `https://www.ximalaya.com/search/${encodedKeyword}`
     };
 
-    return searchMap[platform];
+    return searchMap[platform] || searchMap.bilibili;
 }
 
 function getStorySongContent(ageGroup) {
@@ -388,8 +390,9 @@ function getStorySongContent(ageGroup) {
             tags: ['中文儿歌', ageLabel],
             image: `https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=${encodeURIComponent(`cute Chinese nursery rhyme children singing ${ageLabel}`)}&image_size=portrait_4_3`,
             content: fallback.chinese[2],
-            audioUrl: buildSearchUrl('ximalaya', `${fallback.chinese[0]} 儿歌`),
-            videoUrl: buildSearchUrl('bilibili', `${fallback.chinese[0]} 儿歌`)
+            audioUrl: buildSearchUrl('youtube', `${fallback.chinese[0]} 儿歌 高质量`),
+            videoUrl: buildSearchUrl('bilibili', `${fallback.chinese[0]} 儿歌`),
+            ximalayaUrl: buildSearchUrl('ximalaya', `${fallback.chinese[0]} 儿歌 高质量`)
         },
         {
             name: fallback.story[0],
@@ -397,8 +400,9 @@ function getStorySongContent(ageGroup) {
             tags: ['故事', ageLabel],
             image: `https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=${encodeURIComponent(`warm cartoon bedtime story for ${ageLabel} child`)}&image_size=portrait_4_3`,
             content: fallback.story[1],
-            storyUrl: buildSearchUrl('baidu', `${fallback.story[0]} 儿童故事`),
-            videoUrl: buildSearchUrl('bilibili', `${fallback.story[0]} 儿童故事`)
+            audioUrl: buildSearchUrl('youtube', `${fallback.story[0]} 儿童故事 高质量`),
+            videoUrl: buildSearchUrl('bilibili', `${fallback.story[0]} 儿童故事 高质量`),
+            ximalayaUrl: buildSearchUrl('ximalaya', `${fallback.story[0]} 儿童故事 高质量`)
         }
     ];
 }
@@ -520,7 +524,7 @@ function generateGames(games) {
             <p>${game.desc}</p>
             ${game.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
             ${game.image ? '<div class="card-image-wrapper"><img src="' + game.image + '" class="card-image"></div>' : ''}
-            ${game.video ? '<div class="video-badge">▶ 有视频教程</div>' : ''}
+            <div class="video-badge">▶ 可搜索视频示范</div>
         </div>
     `).join('');
     
@@ -553,6 +557,7 @@ function generateBooks(books) {
             <p>${book.desc}</p>
             ${book.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
             ${book.image ? '<div class="card-image-wrapper"><img src="' + book.image + '" class="card-image"></div>' : ''}
+            <div class="video-badge">▶ 可搜索讲读视频</div>
         </div>
     `).join('');
     
@@ -585,7 +590,7 @@ function generateStories(stories) {
             <p>${story.desc}</p>
             ${story.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
             ${story.image ? '<div class="card-image-wrapper"><img src="' + story.image + '" class="card-image"></div>' : ''}
-            <div class="video-badge">▶ 有音频/视频/故事链接</div>
+            <div class="video-badge">▶ 可搜索音频/视频</div>
         </div>
     `).join('');
 
